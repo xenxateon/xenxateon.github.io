@@ -1,0 +1,307 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+} 
+
+body {
+    font-family: 'Poppins', sans-serif;
+} 
+
+img {
+    width: 100%;
+}
+
+video {
+    width: 100%;
+}
+
+.logo  {
+
+    color: #ffffff;
+    font-size: 51px;
+    position: fixed;
+    font-weight: 1000;
+    width: 100%;
+    transition: 2.5s;
+    padding: 0px 6px;
+    block-size: 67.5px;
+    margin: -11px 0;
+    z-index: 1000;
+
+}
+
+
+
+.moriase {
+    display: flex;
+    margin-left: -5px;
+    margin-right: -5px;
+    flex-wrap: wrap;
+    padding: 0 0 0px;
+}
+
+
+
+
+.build {
+    flex: 16%;
+    padding: 2px;
+}
+
+.build img {
+    margin-top: -8px;
+}
+
+.build video {
+    margin-top: -7px
+}
+
+@media  (max-width: 768px) {
+    img {
+        width: 100%;
+    }
+
+    video {
+        width: 100%;
+    }
+
+     .build {
+         flex: 50%;
+     }
+ 
+     .logo {
+         font-size: 30px;
+         padding: 0px 2px;
+         block-size: 41px;
+         margin: -5px 0;
+     }
+ 
+     .ap {
+         display: flex;
+         font-size: small;
+         block-size: 1px;
+         margin: -10px;
+     }
+ }
+
+
+
+
+
+
+
+header.abajo {
+    background: #ffffff;
+    padding: 0px 0px;
+}
+
+header.abajo .logo {
+    color: #000000;
+    background-color: rgba(255, 255, 255, 0.938);
+}
+
+.zuley {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.zuley a {
+    margin: 15px 0px 15px 0px;
+    position: relative;
+    display: inline-block;
+    padding: 5px 50px;
+    border: 2px solid #ff0000;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: 2px;
+    color: #000000;
+    -webkit-box-reflect: below 0px linear-gradient 
+    (transparent, #ff0095);
+    transition: 0.5s;
+    transition-delay: 0s;
+} 
+
+.zuley a:hover {
+    transition-delay: 0.5s;
+    color: rgb(255, 0, 0);
+    box-shadow: 0 0 10px rgb(255, 0, 0),
+    0 0 20px rgb(0, 0, 0),
+    0 0 40px rgb(0, 0, 0),
+    0 0 80px rgb(0, 0, 0),
+    0 0 160px rgb(0, 0, 0);
+
+}
+
+.zuley a span {
+    position: relative;
+    z-index: 100;
+}
+
+.zuley a:nth-child(2) {
+    filter: hue-rotate(80dg);
+}
+
+.zuley a::before {
+    content: '';
+    position: absolute;
+    left: -100px;
+    top: 50%;
+    transform: translateY(-48%);
+    width: 100px;
+    height: 2px;
+    background: #000000;
+    box-shadow: 15px -8px 0 #000000,
+                15px 8px 0 #000000;
+    transition: width 0.6s, left 0.6s, height 0.6s, 
+    box-shadow 0.6s;
+    
+}
+
+.zuley a:hover::before {
+    width: 60%;
+    height: 119%;
+    left: -2px;
+    box-shadow: -7px 0 0 #000000,
+                -7px 0 0 #000000;
+    
+}
+
+
+.zuley a::after {
+    content: '';
+    position: absolute;
+    right: -100px;
+    top: 50%;
+    transform: translateY(-48%);
+    width: 100px;
+    height: 2px;
+    background: #000000;
+    box-shadow: -15px -8px 0 #000000,
+                -15px 8px 0 #000000;
+    transition: width 0.6s, left 0.6s, height 0.6s, 
+    box-shadow 0.5s;
+   
+}
+
+.zuley a:hover::after {
+    width: 60%;
+    height: 119%;
+    right: -2px;
+    box-shadow: 7px 0 0 rgb(0, 0, 0),
+                7px 0 0 rgb(0, 0, 0);
+  
+}
+
+.zuley.zuley a:hover::after {
+    transition: 0.5s;
+}
+
+.zuley.zuley a::after {
+    transition: 0.5s;
+}
+
+
+
+
+@media  (max-width: 375px) {
+    .zuley a {
+        margin: 15px 0px 15px 0px;
+        position: relative;
+        display: inline-block;
+        padding: 1px 45px;
+        border: 2px solid #ff0000;
+        font-weight: 600;
+        text-decoration: none;
+        letter-spacing: 2px;
+        color: #000000;
+        -webkit-box-reflect: below 0px linear-gradient 
+        (transparent, #ff0095);
+        transition: 0.5s;
+        transition-delay: 0s;
+    } 
+    
+    .zuley a:hover {
+        transition-delay: 0.5s;
+        color: rgb(255, 0, 0);
+        box-shadow: 0 0 10px rgb(255, 0, 0),
+        0 0 20px rgb(0, 0, 0),
+        0 0 40px rgb(0, 0, 0),
+        0 0 80px rgb(0, 0, 0),
+        0 0 160px rgb(0, 0, 0);
+    
+    }
+    
+    .zuley a span {
+        position: relative;
+        z-index: 100;
+    }
+    
+    .zuley a:nth-child(2) {
+        filter: hue-rotate(80dg);
+    }
+    
+    .zuley a::before {
+        content: '';
+        position: absolute;
+        left: -60px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 60px;
+        height: 2px;
+        background: #000000;
+        box-shadow: 15px -8px 0 #000000,
+                    15px 8px 0 #000000;
+        transition: width 0.6s, left 0.6s, height 0.6s, 
+        box-shadow 0.6s;
+        
+    }
+    
+    .zuley a:hover::before {
+        width: 107%;
+        height: 120%;
+        left: -2px;
+        box-shadow: -7px 0 0 #000000,
+                    -7px 0 0 #000000;
+        
+    }
+    
+    
+    .zuley a::after {
+        content: '';
+        position: absolute;
+        right: -60px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 60px;
+        height: 2px;
+        background: #000000;
+        box-shadow: -15px -8px 0 #000000,
+                    -15px 8px 0 #000000;
+        transition: width 0.6s, left 0.6s, height 0.6s, 
+        box-shadow 0.5s;
+       
+    }
+    
+    .zuley a:hover::after {
+        width: 107%;
+        height: 120%;
+        right: -2px;
+        box-shadow: 1px 0 0 rgb(0, 0, 0),
+                    1px 0 0 rgb(0, 0, 0);
+      
+    }
+
+
+
+}
+ 
+ 
+
+
