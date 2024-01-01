@@ -1,9 +1,12 @@
+
 <!---->DOCTYPE html>
 >
 >
   <title>Ejemplo de solicitud Fetch al cargar la página</title>
 </head>
 >
+  <p id="contenido"></p>
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       obtenerContenido();
@@ -13,8 +16,8 @@
       fetch('https://xvideos.es')
         .then(response => response.text())
         .then(data => {
-          // Aquí puedes trabajar con el contenido del archivo
-          console.log(data);
+          // Asignar el contenido al elemento HTML
+          document.getElementById('contenido').textContent = data;
         })
         .catch(error => {
           // Manejo de errores
