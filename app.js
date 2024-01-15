@@ -21559,11 +21559,12 @@
                 e.n && ($(".crash-anim").addClass("animated"),
                 $(".crash-anim-container").addClass("animated"),
                 $(".result").addClass("animated").text(e.n.toFixed(2) + "X"),
-				 console.log('e.n.toFixed(2) + "X"');
+				 
                 HowlerSoundManager.play("game-finish"),
                 clearTimeout(i),
                 i = null,
                 setTimeout(f, 500))
+				console.log('e.n.toFixed(2) + "X"');
             }
             function f() {
 				//Aqui termina el juego 
@@ -21694,7 +21695,7 @@
                     e.n && !e.fn && ($(".current-num").text(GetNumStr(e.n) + "x"),
                     h(0),
                     h(1),
-					 console.log('GetNumStr(e.n) + "x Current Num"');
+					
                     function() {
                         if (null != e)
                             for (let t = 0; t < 2; t++) {
