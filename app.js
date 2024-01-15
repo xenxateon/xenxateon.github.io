@@ -21686,16 +21686,17 @@
                                 let r = o[t];
 								
                                 if (null !== r.betID && !r.cashoutProcessing) {
-                                    if (e.n * r.amount - r.amount >= UGG.getGameState().MaxProfit) {
-                                        c(t);
+                                         c(t);
                                         continue
-                                    }
+                                    $(".cashout-button").click(),
                                     r.autoCashoutOdd && e.n >= r.autoCashoutOdd && c(t)
                                 }
                             }
                     }()),
-					  $(".cashout-button").click(),
-					   c(t);
+					 
+					  if (null !== r.betID && !r.cashoutProcessing) {
+						  c(t);
+						  },
 						r.autoCashoutOdd && e.n >= r.autoCashoutOdd && c(t)
                     !e.fn || s && s.fn || (1 == e.n && d(),
 					  
