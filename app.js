@@ -21392,8 +21392,10 @@
                     }
                 };
                 return e.reset(),
-                e.betWrapper = $(`.bet-setting:nth-child(${e.index + 1})`)
-            };
+                e.betWrapper = $(`.bet-setting:nth-child(${e.index + 1})`),
+                e
+            }
+            ;
             const o = [n(0), n(1)];
             function s(t, e) {
                 $(".error-wrapper", t).find(".error").html(e).end().show(),
@@ -21527,13 +21529,11 @@
                 )).catch(UI.drawError))
             }
             function d() {
-					//Aqui comienza el juego
                 clearInterval(r),
                 r = null,
                 a(0),
                 a(1),
-                soundOffButton.click(),
-				$(".crash-anim").removeClass("animated"),
+                $(".crash-anim").removeClass("animated"),
                 $(".result").removeClass("animated").empty(),
                 $(".bet-loader").removeClass("visible"),
                 $(".dino").show(),
@@ -21547,34 +21547,24 @@
                 _()
             }
             function p() {
-					//console.log('Finalizo el juego');
-					//alert("Finalizo el juego");
-					//$(".cashout-button", i.betWrapper).click();
-					//$(".cashout-button").click();
                 HowlerSoundManager.stop("bg-music"),
-				//alert("Finalizo el juego"),
-                $(".cashout-button").click(),
+				$(".cashout-button").click(),
 				$(".cashout-button", i.betWrapper).click(),
 				soundOffButton.click(),
-				o[0].betID = null,
+                o[0].betID = null,
                 o[1].betID = null,
                 a(0),
                 a(1),
                 e.n && ($(".crash-anim").addClass("animated"),
                 $(".crash-anim-container").addClass("animated"),
                 $(".result").addClass("animated").text(e.n.toFixed(2) + "X"),
-				soundOffButton.click(),
                 HowlerSoundManager.play("game-finish"),
-				soundOffButton.click(),
                 clearTimeout(i),
                 i = null,
                 setTimeout(f, 500))
-				
             }
             function f() {
-					
                 function t(t) {
-					// aqui termina el juego parte 2
                     var e = $(".layer." + t)
                       , r = (e.css("transform").split(",")[4] || "").trim() || 0;
                     e.removeClass("animated"),
@@ -21716,7 +21706,6 @@
                       , r = $("#popup-dino-spins .popup-body ul").empty();
                     t.forEach((function(t) {
                         var i = $(`<li>${GetNumStr(t.n)}</li>`);
-						
                         t.n < 3 ? i.addClass("low") : t.n <= 10 ? i.addClass("middle") : i.addClass("high"),
                         e.append(i),
                         r.append(i.clone())
