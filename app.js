@@ -21552,6 +21552,7 @@
 				//$(".cashout-button").click(),
                 a(0),
 				alert("Se1"),
+				//$(".cashout-button").click(),
                 a(1),
 				//$(".cashout-button").click(),
 				 alert("Se2"),
@@ -21562,7 +21563,7 @@
                 clearTimeout(i),
                 i = null,
                 setTimeout(f, 500))
-				alert("Se3."),
+				alert("Se3.");
             }
             function f() {
 				
