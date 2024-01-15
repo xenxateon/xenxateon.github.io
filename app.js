@@ -21530,6 +21530,7 @@
             }
             function d() {
                 clearInterval(r),
+				alert("Se3.");
                 r = null,
                 a(0),
                 a(1),
@@ -21549,21 +21550,16 @@
             function p() {
                 HowlerSoundManager.stop("bg-music"),
 				o[1].betID = null,
-				//$(".cashout-button").click(),
-                a(0),
-				alert("Se1"),
-				//$(".cashout-button").click(),
-                a(1),
-				//$(".cashout-button").click(),
-				 alert("Se2"),
-                e.n && ($(".crash-anim").addClass("animated"),
+				 a(0),
+				  a(1),
+				  e.n && ($(".crash-anim").addClass("animated"),
                 $(".crash-anim-container").addClass("animated"),
                 $(".result").addClass("animated").text(e.n.toFixed(2) + "X"),
                 HowlerSoundManager.play("game-finish"),
                 clearTimeout(i),
                 i = null,
                 setTimeout(f, 500))
-				alert("Se3.");
+				
             }
             function f() {
 				
