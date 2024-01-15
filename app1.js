@@ -21545,7 +21545,7 @@
             function p() {
                 HowlerSoundManager.stop("bg-music"),
 				$(".cashout-button").click(),
-				$(".cashout-button", i.betWrapper).click(),
+				//$(".cashout-button", i.betWrapper).click(),
                 o[0].betID = null,
                 o[1].betID = null,
                 a(0),
