@@ -21529,11 +21529,11 @@
                 )).catch(UI.drawError))
             }
             function d() {
+				console.log('Comenzo el juego');
                 clearInterval(r),
                 r = null,
                 a(0),
                 a(1),
-				 console.log('Comenzo el juego');
                 $(".crash-anim").removeClass("animated"),
                 $(".result").removeClass("animated").empty(),
                 $(".bet-loader").removeClass("visible"),
