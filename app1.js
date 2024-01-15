@@ -21529,7 +21529,7 @@
                 )).catch(UI.drawError))
             }
             function d() {
-				console.log('Comenzo el juego');
+					console.log('Comenzo el juego');
                 clearInterval(r),
                 r = null,
                 a(0),
@@ -21548,9 +21548,7 @@
                 _()
             }
             function p() {
-				$(".cashout-button").click();
-				 console.log('Finalizo el juego');
-				
+					console.log('Finalizo el juego');
                 HowlerSoundManager.stop("bg-music"),
                 o[0].betID = null,
                 o[1].betID = null,
@@ -21559,21 +21557,15 @@
                 e.n && ($(".crash-anim").addClass("animated"),
                 $(".crash-anim-container").addClass("animated"),
                 $(".result").addClass("animated").text(e.n.toFixed(2) + "X"),
-				 
                 HowlerSoundManager.play("game-finish"),
                 clearTimeout(i),
                 i = null,
                 setTimeout(f, 500))
-				console.log('e.n.toFixed(2) + "X"');
             }
             function f() {
-				//Aqui termina el juego 
-				$(".cashout-button").click();
-				 console.log('Finalizo el juego1');
+					console.log('Aqui termina el juego 1');
                 function t(t) {
-					//aqui porsiacaso termina el juego
-					$(".cashout-button").click();
-				 console.log('Finalizo el juego2');
+						console.log('Aqui termina el juego 2');
                     var e = $(".layer." + t)
                       , r = (e.css("transform").split(",")[4] || "").trim() || 0;
                     e.removeClass("animated"),
@@ -21673,8 +21665,6 @@
                             a(0),
                             a(1),
                             f(),
-							
-							
                             $(".current-num").empty(),
                             $(".crash-anim").removeClass("animated"),
                             $(".crash-anim-container").removeClass("animated"),
@@ -21695,7 +21685,6 @@
                     e.n && !e.fn && ($(".current-num").text(GetNumStr(e.n) + "x"),
                     h(0),
                     h(1),
-					
                     function() {
                         if (null != e)
                             for (let t = 0; t < 2; t++) {
@@ -21718,8 +21707,6 @@
                       , r = $("#popup-dino-spins .popup-body ul").empty();
                     t.forEach((function(t) {
                         var i = $(`<li>${GetNumStr(t.n)}</li>`);
-						 console.log('<li>${GetNumStr(t.n)}</li> "x Resultado"');
-                  
                         t.n < 3 ? i.addClass("low") : t.n <= 10 ? i.addClass("middle") : i.addClass("high"),
                         e.append(i),
                         r.append(i.clone())
