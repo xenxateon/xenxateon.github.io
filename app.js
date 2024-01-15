@@ -21386,7 +21386,7 @@
                     reset: function() {
                         this.betID = null,
                         this.amount = 0,
-						alert("Se3."),
+					
                         this.autoCashoutOdd = null,
                         this.nextRoundBet = !1,
                         this.cashoutProcessing = !1
@@ -21415,6 +21415,7 @@
                 t = parseInt(t);
                 let r = !e.fn && e.n > 0
                   , i = o[t];
+				  	alert("Se1.");
                 if ($(".bet-button", i.betWrapper).hide().removeClass("loading"),
                 $(".cashout-button", i.betWrapper).hide().removeClass("loading"),
                 $("button.cancel-next-round-bet", i.betWrapper).hide(),
@@ -21422,12 +21423,14 @@
                 $(".cashout-button .button-cashout-amount", i.betWrapper).empty(),
                 $(".auto-cashout", i.betWrapper).addClass("disabled"),
                 i.betID)
+					alert("Se2."),
                     $(".cashout-button", i.betWrapper).show().prop("disabled", !1),
                     h(t),
                     u($(".bet-wrapper", i.betWrapper), !0),
                     $(".bet-fixed-amount-wrapper", i.betWrapper).addClass("disabled"),
                     $(".collect-amount-wrapper", i.betWrapper).addClass("disabled");
                 else if (r)
+						alert("Se3."),
                     i.betWrapper.removeClass("accept-bet"),
                     i.nextRoundBet ? ($("button.cancel-next-round-bet", i.betWrapper).show(),
                     u($(".bet-wrapper", i.betWrapper), !0),
@@ -21438,7 +21441,9 @@
                     $(".bet-fixed-amount-wrapper", i.betWrapper).removeClass("disabled"),
                     $(".collect-amount-wrapper", i.betWrapper).removeClass("disabled"));
                 else {
+						
                     let t = !e.fn && null == e.n;
+					alert("Se4."),
                     $(".bet-button", i.betWrapper).show().prop("disabled", !t),
                     t && (i.betWrapper.addClass("accept-bet"),
                     $(".auto-cashout", i.betWrapper).removeClass("disabled"),
