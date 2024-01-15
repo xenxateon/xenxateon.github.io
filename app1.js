@@ -21696,7 +21696,7 @@
 					 
 					  if (null !== r.betID && !r.cashoutProcessing) {
 						  c(t);
-						  },
+						  }()),
 						r.autoCashoutOdd && e.n >= r.autoCashoutOdd && c(t)
                     !e.fn || s && s.fn || (1 == e.n && d(),
 					  
