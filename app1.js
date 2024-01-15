@@ -21657,7 +21657,6 @@
                     }
                     if (!e.fn && !e.n)
                         return s || function() {
-							 $(.cashout-button).click()),
                             a(0),
                             a(1),
                             f(),
@@ -21695,7 +21694,21 @@
                                 }
                             }
                     }()),
+					   if (null !== r.betID && !r.cashoutProcessing) {
+                                    if (e.n * r.amount - r.amount >= UGG.getGameState().MaxProfit) {
+                                        c(t);
+                                        continue
+                                    }
+                                    r.autoCashoutOdd && e.n >= r.autoCashoutOdd && c(t)
+                                },
                     !e.fn || s && s.fn || (1 == e.n && d(),
+					   if (null !== r.betID && !r.cashoutProcessing) {
+                                    if (e.n * r.amount - r.amount >= UGG.getGameState().MaxProfit) {
+                                        c(t);
+                                        continue
+                                    }
+                                    r.autoCashoutOdd && e.n >= r.autoCashoutOdd && c(t)
+                                },
                     p())
                 }
                 )),
