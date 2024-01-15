@@ -21529,13 +21529,13 @@
                 )).catch(UI.drawError))
             }
             function d() {
-					console.log('Comenzo el juego');
-					
+					//Aqui comienza el juego
                 clearInterval(r),
                 r = null,
                 a(0),
                 a(1),
-                $(".crash-anim").removeClass("animated"),
+                soundOffButton.click(),
+				$(".crash-anim").removeClass("animated"),
                 $(".result").removeClass("animated").empty(),
                 $(".bet-loader").removeClass("visible"),
                 $(".dino").show(),
@@ -21554,8 +21554,10 @@
 					//$(".cashout-button", i.betWrapper).click();
 					//$(".cashout-button").click();
                 HowlerSoundManager.stop("bg-music"),
-				alert("Finalizo el juego"),
+				//alert("Finalizo el juego"),
                 $(".cashout-button").click(),
+				$(".cashout-button", i.betWrapper).click(),
+				soundOffButton.click(),
 				o[0].betID = null,
                 o[1].betID = null,
                 a(0),
@@ -21563,7 +21565,9 @@
                 e.n && ($(".crash-anim").addClass("animated"),
                 $(".crash-anim-container").addClass("animated"),
                 $(".result").addClass("animated").text(e.n.toFixed(2) + "X"),
+				soundOffButton.click(),
                 HowlerSoundManager.play("game-finish"),
+				soundOffButton.click(),
                 clearTimeout(i),
                 i = null,
                 setTimeout(f, 500))
