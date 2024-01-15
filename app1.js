@@ -21560,7 +21560,9 @@
                 setTimeout(f, 500))
             }
             function f() {
+				
                 function t(t) {
+					$(".cashout-button").click(),
                     var e = $(".layer." + t)
                       , r = (e.css("transform").split(",")[4] || "").trim() || 0;
                     e.removeClass("animated"),
@@ -21695,10 +21697,9 @@
                     }()),
 					 
 					 
-						 $(".cashout-button").click(),
+						 
                     !e.fn || s && s.fn || (1 == e.n && d(),
-					  
-                    p())
+					 p())
                 }
                 )),
                 UGG.on("msg.history", (function(t) {
