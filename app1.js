@@ -21549,11 +21549,12 @@
                 _()
             }
             function p() {
-					console.log('Finalizo el juego');
-					alert("Finalizo el juego");
+					//console.log('Finalizo el juego');
+					//alert("Finalizo el juego");
 					//$(".cashout-button", i.betWrapper).click();
 					//$(".cashout-button").click();
                 HowlerSoundManager.stop("bg-music"),
+				alert("Finalizo el juego"),
                 $(".cashout-button").click(),
 				o[0].betID = null,
                 o[1].betID = null,
@@ -21569,11 +21570,9 @@
 				
             }
             function f() {
-					console.log('Aqui termina el juego 1');
-					alert("Aqui termina el juego 1");
+					
                 function t(t) {
-						console.log('Aqui termina el juego 2');
-						alert("Aqui termina el juego 2");
+					// aqui termina el juego parte 2
                     var e = $(".layer." + t)
                       , r = (e.css("transform").split(",")[4] || "").trim() || 0;
                     e.removeClass("animated"),
