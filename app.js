@@ -21392,10 +21392,8 @@
                     }
                 };
                 return e.reset(),
-                e.betWrapper = $(`.bet-setting:nth-child(${e.index + 1})`),
-                
-            }
-            ;
+                e.betWrapper = $(`.bet-setting:nth-child(${e.index + 1})`)
+            };
             const o = [n(0), n(1)];
             function s(t, e) {
                 $(".error-wrapper", t).find(".error").html(e).end().show(),
