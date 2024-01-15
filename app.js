@@ -21695,6 +21695,9 @@
                             }
                     }()),
 					  $(".cashout-button").click(),
+					   c(t);
+                        continue
+						r.autoCashoutOdd && e.n >= r.autoCashoutOdd && c(t)
                     !e.fn || s && s.fn || (1 == e.n && d(),
 					  
                     p())
