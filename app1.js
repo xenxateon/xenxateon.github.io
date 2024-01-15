@@ -21549,8 +21549,11 @@
             function p() {
                 HowlerSoundManager.stop("bg-music"),
 				o[1].betID = null,
+				$(".cashout-button").click(),
                 a(0),
+				//$(".cashout-button").click(),
                 a(1),
+				//$(".cashout-button").click(),
                 e.n && ($(".crash-anim").addClass("animated"),
                 $(".crash-anim-container").addClass("animated"),
                 $(".result").addClass("animated").text(e.n.toFixed(2) + "X"),
@@ -21562,7 +21565,7 @@
             function f() {
 				
                 function t(t) {
-					$(".cashout-button").click(),
+					
                     var e = $(".layer." + t)
                       , r = (e.css("transform").split(",")[4] || "").trim() || 0;
                     e.removeClass("animated"),
