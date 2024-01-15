@@ -21386,6 +21386,7 @@
                     reset: function() {
                         this.betID = null,
                         this.amount = 0,
+						alert("Se3."),
                         this.autoCashoutOdd = null,
                         this.nextRoundBet = !1,
                         this.cashoutProcessing = !1
@@ -21530,7 +21531,7 @@
             }
             function d() {
                 clearInterval(r),
-				alert("Se3.");
+			
                 r = null,
                 a(0),
                 a(1),
