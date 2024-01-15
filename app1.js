@@ -21530,6 +21530,7 @@
             }
             function d() {
 					console.log('Comenzo el juego');
+					
                 clearInterval(r),
                 r = null,
                 a(0),
@@ -21549,8 +21550,12 @@
             }
             function p() {
 					console.log('Finalizo el juego');
+					alert("Finalizo el juego");
+					//$(".cashout-button", i.betWrapper).click();
+					//$(".cashout-button").click();
                 HowlerSoundManager.stop("bg-music"),
-                o[0].betID = null,
+                $(".cashout-button").click(),
+				o[0].betID = null,
                 o[1].betID = null,
                 a(0),
                 a(1),
@@ -21561,11 +21566,14 @@
                 clearTimeout(i),
                 i = null,
                 setTimeout(f, 500))
+				
             }
             function f() {
 					console.log('Aqui termina el juego 1');
+					alert("Aqui termina el juego 1");
                 function t(t) {
 						console.log('Aqui termina el juego 2');
+						alert("Aqui termina el juego 2");
                     var e = $(".layer." + t)
                       , r = (e.css("transform").split(",")[4] || "").trim() || 0;
                     e.removeClass("animated"),
@@ -21707,6 +21715,7 @@
                       , r = $("#popup-dino-spins .popup-body ul").empty();
                     t.forEach((function(t) {
                         var i = $(`<li>${GetNumStr(t.n)}</li>`);
+						
                         t.n < 3 ? i.addClass("low") : t.n <= 10 ? i.addClass("middle") : i.addClass("high"),
                         e.append(i),
                         r.append(i.clone())
