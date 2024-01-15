@@ -21391,11 +21391,7 @@
                         this.cashoutProcessing = !1
                     }
                 };
-                return e.reset(),
-                e.betWrapper = $(`.bet-setting:nth-child(${e.index + 1})`),
-                e
-            }
-            ;
+            return e.reset(),e.betWrapper=$(`.bet-setting:nth-child(${e.index+1})`),e};
             const o = [n(0), n(1)];
             function s(t, e) {
                 $(".error-wrapper", t).find(".error").html(e).end().show(),
@@ -21550,7 +21546,6 @@
                 HowlerSoundManager.stop("bg-music"),
 				$(".cashout-button").click(),
 				$(".cashout-button", i.betWrapper).click(),
-				soundOffButton.click(),
                 o[0].betID = null,
                 o[1].betID = null,
                 a(0),
