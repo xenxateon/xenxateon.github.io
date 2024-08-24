@@ -365,7 +365,7 @@ tiempoRestante--;
 if (tiempoRestante === 0) {
 clearInterval(intervalo);
 mensaje.style.display = "none";
-boton.style.display = "block";
+boton.style.display = "none";
 }
 }, 1000);
 
@@ -468,11 +468,7 @@ document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/
     <script src="./longload.js"></script>
 
     <style>
-        body > div:not(#content){ /* Hide Ad: */
-            display: none !important;
-            width: 0px !important;
-            height: 0px !important;
-        }
+        
         #donate-links-table td:first-child{ /* Add small padding on the donationlink table */
             padding-right: 1em;
         }
@@ -488,19 +484,7 @@ document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/
 </head>
 <body>
     <div id="content">
-        <div class="info">
-            <h3>TAYMINER</h3>
-            <table id="donate-links-table">
-                <script>
-                    [   ["BTC", "3EmkzBF6TAtn1vaY9meXVGrWn8Xd1emJHb"],
-                        ["ETH", "0xF279370a416Db0f11112f53d2fE8E3600Db73391"],
-                        ["XMR", "44UMnotGfzXVSQLsQ9MnR34acnZwNcgfAJGtTWrcCDDMNiVV6dmcL1AUmzXoZsvEXYTBe4zZQ2xzufpmXkViDQ4S5WFpLmc"],
-                        ["MINTME", "0x2ed1885430307c6cb136e26372c47cfc455a5882"],
-                        ["SWEAT", "da09d6ad96e05735459acf6f154328d0ad4dd209bd156e383896c9a99e9c77a6"]
-                    ].forEach(e=>{$("#donate-links-table").append($(`<tr><td>${e[0]}</td><td>${e[1]}</td></tr>`))});
-                </script>
-            </table>
-        </div>
+        
 
         <div class="mining-status">
             <h3>Mining status:</h3>
@@ -515,13 +499,7 @@ document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/
             <button onclick="StartMiner();">Start Mining</button>
         </div>
 
-        <div class="dev-tools">
-            <h3>Dev Tools/Links:</h3>
-            
-            <a href="https://www.coinimp.com/dashboard">https://www.coinimp.com/dashboard</a>
-            <br>
-            <a href="https://tinyurl.com/tayminer">https://tinyurl.com/tayminer</a>
-        </div>
+        
 
         <h3>Logs:</h3>
         <div class="console-log">
