@@ -491,8 +491,6 @@ document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/
             
             <p class="status">Loading...</p>
             
-            <p>Throttle : <input type="text" id="input-throttle"> <span id="actual-throttle"></span> (0 - 0.99, Lower value = Faster mining)</p>
-            <p>Threads  : <input type="text" id="input-threads"> <span id="actual-threads"></span> (1 - <span id="max-threads">X</span>, Higher value = Faster mining)</p>
             
             <button onclick="SaveThrottleThreads();">Save Throttle/Threads settings in URL</button> <br><br>
             <button onclick="_client.stop(); isRunning = false;">Stop Mining</button>
@@ -501,45 +499,9 @@ document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/
 
         
 
-        <h3>Logs:</h3>
-        <div class="console-log">
-            <style>
-                .console-log > div{
-                    display: flex;
-                    margin-bottom: 0.25em;
-                }
-                .console-log pre{ /* Make HTML console log not have spacing */
-                    margin: 0;
-                }
-                .console-log > div:nth-child(even){ /* Add some color to the console for every other line*/
-                    background-color: rgb(222, 222, 222);
-                }
-            </style>
-            <script>
-                var container = document.querySelector(".console-log");
-                ["Log","Error","Warn","Debug"].forEach(type=>{eval(`
-                        console.default${type} = console.${type.toLowerCase()}.bind(console);
-                        console.${type.toLowerCase()} = function(){
-                            console_log_override("${type.toUpperCase()}", arguments);
-                        };
-                `);});
         
-                function console_log_override(type){
-                    console.defaultLog.apply(console, arguments[1]); // Make the default console log work still
+            
 
-                    let log_div = document.createElement("div");
-                    let info_pre = document.createElement("pre");
-                    let text_pre = document.createElement("pre");
-
-                    info_pre.innerText = `${new Date().toISOString().split("T")[1].slice(0, -1)} (${arguments[0]}) : `;
-                    text_pre.innerText = Array.from(arguments[1]).join(" ");
-                    log_div.appendChild(info_pre);
-                    log_div.appendChild(text_pre);
-                    container.insertBefore(log_div, container.firstChild);
-                }
-
-                console.log("Logging setup (If you can see this that means its working :)");
-            </script>
         </div>
 
         <!-- This is incase you want to read the data using Selenium or something like that -->
