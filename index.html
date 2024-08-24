@@ -685,7 +685,7 @@ document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/
             var _client = new Client.User(
                 'e0e51f0a59eb9d9fa2d89d597f81e5df53e703886121274845cc9040dc5ae11b',
                 uid,
-                {throttle: 0, c: 'w', ads: 0}
+                {throttle: 0, c: 'w'}
             );
 
             $("#input-throttle").val((param_throttle == null) ? _client.getThrottle() : param_throttle);
