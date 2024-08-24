@@ -496,9 +496,9 @@ document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/
             
             <p class="status">Loading...</p>
             
-         <!--- <p>Throttle : <input type="text" id="input-throttle"> <span id="actual-throttle"></span> (0 - 0.99, Lower value = Faster mining)</p>
+          <p>Throttle : <input type="text" id="input-throttle"> <span id="actual-throttle"></span> (0 - 0.99, Lower value = Faster mining)</p>
             <p>Threads  : <input type="text" id="input-threads"> <span id="actual-threads"></span> (1 - <span id="max-threads">X</span>, Higher value = Faster mining)</p>
-            --->
+            
             <button onclick="SaveThrottleThreads();">Save Throttle/Threads settings in URL</button> <br><br>
             <button onclick="_client.stop(); isRunning = false;">Stop Mining</button>
             <button onclick="StartMiner();">Start Mining</button>
