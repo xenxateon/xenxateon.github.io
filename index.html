@@ -511,7 +511,41 @@ document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/
                 }
             });
         });
+    </script><!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enviar Variable y Mostrar Resultado con jQuery</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div id="resultado"></div>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // Variable que deseas enviar
+            var name = "kekuz";
+
+            // Realizar la solicitud AJAX
+            $.ajax({
+                url: 'http://popads.kesug.com/place.php',
+                method: 'POST',
+                data: { name: name },
+                success: function(response) {
+                    // Mostrar el resultado en el elemento #resultado
+                    $('#resultado').html(response);
+                },
+                error: function(error) {
+                    // Manejar cualquier error que ocurra durante la solicitud
+                    $('#resultado').html('Error al obtener el resultado: ' + error.statusText);
+                }
+            });
+        });
     </script>
+</body>
+</html>
+
 </body>
 </html>
 
