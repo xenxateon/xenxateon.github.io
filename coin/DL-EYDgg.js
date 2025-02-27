@@ -1,0 +1,1 @@
+import{a as s}from"./D6061V51.js";import{d as a,y as r,A as o,B as t,J as l}from"./ChytOuy1.js";const c={class:"partner-logo mr-32"},p={class:"partner-logo__img _ibg"},e=a({__name:"Logo",props:{src:{},alt:{default:""}},setup:a=>(a,e)=>{const m=s;return r(),o("div",c,[t("div",p,[l(m,{src:a.src,alt:a.alt},null,8,["src","alt"])])])}});export{e as _};
